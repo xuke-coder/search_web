@@ -7,6 +7,7 @@ import urllib
 
 
 class zhihu_conf(object):
+		main_url = "http://www.zhihu.com"
 		login_url = "http://www.zhihu.com"
 		header = {
 			"Host":"www.zhihu.com",
@@ -50,12 +51,25 @@ def zhihu_login_func(opener, user_data):
 def zhihu_search_func():
 	print("search..")
 
+def zhihu_request_func(link, opener, user_data):
+	print(link)
+	link = user_data.main_url + "/" + link
+	print(link)
+	data = opener.open(link).read()
+	try:
+		data = gzip.decompress(data)
+		return data.decode()
+	except:
+		pass
+	return data
+	
 
 if __name__=="__main__":
 	wconf = search_all.web_conf()
 	wconf.user_data = zhihu_conf()
 	wconf.user_login_func = zhihu_login_func
 	wconf.user_search_func = zhihu_search_func
+	wconf.user_request_func = zhihu_request_func
 	wconf.deep_num = 10
 	wconf.wide_num = 100
 	
@@ -65,4 +79,4 @@ if __name__=="__main__":
 	sconf.store_path = "/mnt/nfs/path_one"
 	
 	wsearch = search_all.search_one_web(wconf, sconf)
-	wsearch.run()
+	wsearch.run(zhihu_conf.login_url)

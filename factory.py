@@ -1,4 +1,4 @@
-from Queue import *
+from queue import *
 from threading import *
 from time import *
 

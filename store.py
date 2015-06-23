@@ -1,6 +1,9 @@
 import os
 import string
 import hashlib
+import gzip
+import re
+import sys
 
 
 class store_conf(object):
@@ -33,18 +36,26 @@ class store_mgr(object):
 	
 	def store_file(self, file_name, data):
 		md5_obj = hashlib.md5()
-		print(file_name)
+		#print(file_name)
 		md5_obj.update(file_name.encode())
 		file_md5 = md5_obj.hexdigest()
-		print(file_md5)
+		#print(file_md5)
 		path = self.get_file_path(self.conf.store_path, file_md5, self.conf.level_num, self.conf.every_level_num) + "/" + str(file_md5)
-		print(path)
+		print("store path = %s" % path)
 		self.write_file(path, data)
 	
 	def write_file(self, file_path, data):
-		file = open(file_path, "w")
-		file.write(data)
-		file.close()
+		if (type(data) == type("aa")):
+			file = open(file_path, "w")
+		else:
+			file = open(file_path, "wb")
+			
+		try:
+			file.write(data)
+		except:
+			print("write file %s error" % file_path)
+		finally:
+			file.close()
 		
 if __name__ == "__main__":
 	conf = store_conf()

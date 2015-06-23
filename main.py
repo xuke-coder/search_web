@@ -22,8 +22,12 @@ def zhihu_login_func(opener, user_data):
 	
 	opener.addheaders = head
 	data = opener.open(user_data.login_url).read()
-	data = gzip.decompress(data)
-	data = data.decode()
+	try:
+		data = gzip.decompress(data)
+	except:
+		print("not gzip file")
+	finally:
+		data = data.decode()
 	
 	exp = re.compile('name="_xsrf" value="(.*)"', flags = 0)
 	list = exp.findall(data)
@@ -44,18 +48,27 @@ def zhihu_login_func(opener, user_data):
 	print (post_data)
 	post_data = urllib.parse.urlencode(post_data).encode()
 	data = opener.open(login_url, post_data).read()
-	data = gzip.decompress(data)
-	data = data.decode()
+	try:
+		data = gzip.decompress(data)
+	except:
+		print("not gzip file")
+	finally:
+		data = data.decode()
 	return data
 
 def zhihu_search_func():
 	print("search..")
 
 def zhihu_request_func(link, opener, user_data):
-	print(link)
+	#print(link)
 	link = user_data.main_url + "/" + link
-	print(link)
-	data = opener.open(link).read()
+	print("read link %s" % link)
+	try:
+		data = opener.open(link).read()
+	except:
+		print("read nothing!!!")
+		return
+		
 	try:
 		data = gzip.decompress(data)
 		return data.decode()
@@ -76,7 +89,7 @@ if __name__=="__main__":
 	sconf = store.store_conf()
 	sconf.level_num = 2
 	sconf.every_level_num = 10
-	sconf.store_path = "/mnt/nfs/path_one"
+	sconf.store_path = "path_one"
 	
 	wsearch = search_all.search_one_web(wconf, sconf)
 	wsearch.run(zhihu_conf.login_url)

@@ -89,7 +89,7 @@ if __name__=="__main__":
 	sconf = store.store_conf()
 	sconf.level_num = 2
 	sconf.every_level_num = 10
-	sconf.store_path = "path_one"
+	sconf.store_path = "/mnt/nfs/path_base"
 	
 	wsearch = search_all.search_one_web(wconf, sconf)
 	wsearch.run(zhihu_conf.login_url)

@@ -6,4 +6,4 @@ search web page for fun
 
 使用：(目前爬虫程序只支持python3)
  
-python3 main.py
+python3 ./spider/main.py

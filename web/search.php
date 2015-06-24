@@ -20,11 +20,16 @@ class search_manager {
 			return False;
 		}
 		
+		if (strcmp($this->search_str, "") == 0) {
+			return False;
+		}
+		
 		if (strcmp(substr($this->search_path, -1), "/") == 0) {
 			$this->search_path = substr($this->search_path, 1, strlen($this->search_path));
 		}
 		
 		$this->search_all($this->search_path);
+		return True;
 	}
 	
 	function search_all($path)
@@ -87,7 +92,10 @@ class search_manager {
 }
 
 $search_mgr = new search_manager($_POST["search_str"], "/mnt/nfs/path_base");
-$search_mgr->do_search();
+$ret = $search_mgr->do_search();
+if (!$ret) {
+	exit();
+}
 $search_mgr->print_all();
 
 ?>

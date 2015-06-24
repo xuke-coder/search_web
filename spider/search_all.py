@@ -46,6 +46,7 @@ class search_one_web(object):
 		
 	#def spider(self, factory, data):
 	def spider(self, deep, page_link, page_data):
+		page_link = self.web_conf.user_data.main_url + "/" + page_link;
 		if 0:#线程版
 			page_link = data.page_link
 			page_data = data.page_data

@@ -42,15 +42,19 @@ class store_mgr(object):
 		#print(file_md5)
 		path = self.get_file_path(self.conf.store_path, file_md5, self.conf.level_num, self.conf.every_level_num) + "/" + str(file_md5)
 		print("store path = %s" % path)
-		self.write_file(path, data)
+		self.write_file(path, data, file_name)
 	
-	def write_file(self, file_path, data):
+	def write_file(self, file_path, data, link_path):
 		if (type(data) == type("aa")):
 			file = open(file_path, "w")
+			data = link_path + "\n" + data
 		else:
-			file = open(file_path, "wb")
+			file = open(file_path, "w")
+			data = data.decode('utf8')
+			data = link_path + "\n" + data
 			
 		try:
+			
 			file.write(data)
 		except:
 			print("write file %s error" % file_path)

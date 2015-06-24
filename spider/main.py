@@ -60,7 +60,6 @@ def zhihu_search_func():
 	print("search..")
 
 def zhihu_request_func(link, opener, user_data):
-	#print(link)
 	link = user_data.main_url + "/" + link
 	print("read link %s" % link)
 	try:
@@ -92,4 +91,4 @@ if __name__=="__main__":
 	sconf.store_path = "/mnt/nfs/path_base"
 	
 	wsearch = search_all.search_one_web(wconf, sconf)
-	wsearch.run(zhihu_conf.login_url)
+	wsearch.run("")
